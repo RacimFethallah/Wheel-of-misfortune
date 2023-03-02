@@ -44,12 +44,12 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.536" />
+        app:layout_constraintVertical_bias="0.499" />
 
     <ImageView
         android:id="@+id/wheelg1"
-        android:layout_width="286dp"
-        android:layout_height="221dp"
+        android:layout_width="357dp"
+        android:layout_height="355dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.478"
