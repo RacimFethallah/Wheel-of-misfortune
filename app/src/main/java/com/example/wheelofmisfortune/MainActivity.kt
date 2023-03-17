@@ -2,8 +2,6 @@ package com.example.wheelofmisfortune
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.content.ContentValues
-import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
@@ -37,9 +35,9 @@ class MainActivity : AppCompatActivity() {
 
         var addButtonDrawable: Drawable
         var editButtonDrawable: Drawable
-        var plus = ContextCompat.getDrawable(this, R.drawable.plus)
-        var edit = ContextCompat.getDrawable(this, R.drawable.edit)
-        var cross = ContextCompat.getDrawable(this, R.drawable.cancel)
+        val plus = ContextCompat.getDrawable(this, R.drawable.plus)
+        val edit = ContextCompat.getDrawable(this, R.drawable.edit)
+        val cross = ContextCompat.getDrawable(this, R.drawable.cancel)
 
 
         val spinnerData = mutableListOf<String>()
@@ -82,13 +80,13 @@ class MainActivity : AppCompatActivity() {
         // Fonction du bouton editer roue
         editSpinner.setOnClickListener {
             editButtonDrawable = editSpinner.compoundDrawables[1]
-            when {
-                editButtonDrawable.constantState == edit?.constantState -> {
+            when (editButtonDrawable.constantState) {
+                edit?.constantState -> {
                     editSpinner.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.cancel, 0, 0)
                     addButton.visibility = View.VISIBLE
                     deleteButton.visibility = View.VISIBLE
                 }
-                editButtonDrawable.constantState == cross?.constantState -> {
+                cross?.constantState -> {
                     addButton.visibility = View.GONE
                     deleteButton.visibility = View.GONE
                     addtext2.visibility = View.GONE
@@ -96,7 +94,7 @@ class MainActivity : AppCompatActivity() {
                     addButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.plus, 0, 0)
                     editSpinner.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.edit, 0, 0)
                 }
-                editButtonDrawable.constantState == plus?.constantState -> {
+                plus?.constantState -> {
                     addtext.visibility = View.VISIBLE
                     editSpinner.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.check, 0, 0)
                 }
@@ -161,7 +159,7 @@ class MainActivity : AppCompatActivity() {
             val builder = AlertDialog.Builder(this)
             builder.setTitle("Supprimer Roue")
             builder.setMessage("Voulez vous supprimer la roue selectionnée?")
-            builder.setPositiveButton("Oui") { dialog, which ->
+            builder.setPositiveButton("Oui") { _, _ ->
                 val selectedItem = mySpinner.selectedItem as String
                 spinnerAdapter.remove(selectedItem)
                 db.deleteWheel(selectedItem)
@@ -172,7 +170,7 @@ class MainActivity : AppCompatActivity() {
                 if(spinnerAdapter.count == 0){editSpinner.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.plus, 0, 0)
                     editButtonDrawable = editSpinner.compoundDrawables[1]}
             }
-            builder.setNegativeButton("Annuler") { dialog, which ->
+            builder.setNegativeButton("Annuler") { _, _ ->
                 // ne rien faire
             }
             val dialog = builder.create()

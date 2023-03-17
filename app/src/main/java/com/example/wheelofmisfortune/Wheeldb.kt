@@ -10,11 +10,11 @@ class Wheeldb (context: Context, factory: SQLiteDatabase.CursorFactory?) :
     SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION) {
 
     companion object {
-        private val DATABASE_VERSION = 1
-        private val DATABASE_NAME = "wheel_database"
-        val TABLE_NAME = "wheels"
-        val COLUMN_ID = "id"
-        val COLUMN_NAME = "name"
+        private const val DATABASE_VERSION = 1
+        private const val DATABASE_NAME = "wheel_database"
+        const val TABLE_NAME = "wheels"
+        const val COLUMN_ID = "id"
+        const val COLUMN_NAME = "name"
     }
 
 
@@ -25,7 +25,7 @@ class Wheeldb (context: Context, factory: SQLiteDatabase.CursorFactory?) :
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME)
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
         onCreate(db)
     }
 
@@ -49,7 +49,7 @@ class Wheeldb (context: Context, factory: SQLiteDatabase.CursorFactory?) :
 
         val db = this.readableDatabase
 
-        return db.rawQuery("SELECT * FROM " + TABLE_NAME, null)
+        return db.rawQuery("SELECT * FROM $TABLE_NAME", null)
 
     }
 
