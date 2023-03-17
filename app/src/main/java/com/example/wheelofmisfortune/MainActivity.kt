@@ -2,6 +2,7 @@ package com.example.wheelofmisfortune
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Drawable
@@ -17,6 +18,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
+
+
+
 
 
         val mySpinner = findViewById<Spinner>(R.id.spinner)
@@ -39,6 +45,23 @@ class MainActivity : AppCompatActivity() {
         val spinnerData = mutableListOf<String>()
         val spinnerAdapter = ArrayAdapter(this, R.layout.spinner_item, spinnerData)
         mySpinner.adapter = spinnerAdapter
+
+
+
+
+        val db = Wheeldb(this, null)
+
+
+
+        val cursor = db.getNamedb()
+
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                spinnerAdapter.add(cursor.getString(cursor.getColumnIndexOrThrow(Wheeldb.COLUMN_NAME)))
+            }
+        }
+
+
 
 
 
@@ -88,6 +111,7 @@ class MainActivity : AppCompatActivity() {
                             editSpinner.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.edit, 0, 0)
                             spinnerAdapter.add(text)
                             addtext.setText("")
+                            db.addWheeldb(text)
                         }
                     }
                 }
@@ -116,6 +140,7 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this, "Roue '$text' existe deja", Toast.LENGTH_SHORT)
                         .show()
                 } else {
+                    db.addWheeldb(text)
                     spinnerAdapter.add(text)
                     addtext2.visibility = View.GONE
                     addButton.visibility = View.GONE
@@ -139,6 +164,7 @@ class MainActivity : AppCompatActivity() {
             builder.setPositiveButton("Oui") { dialog, which ->
                 val selectedItem = mySpinner.selectedItem as String
                 spinnerAdapter.remove(selectedItem)
+                db.deleteWheel(selectedItem)
                 addButton.visibility = View.GONE
                 deleteButton.visibility = View.GONE
                 editSpinner.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.edit, 0, 0)
