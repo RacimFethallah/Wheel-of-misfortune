@@ -21,7 +21,7 @@ class ActivityG2 : AppCompatActivity() {
             btnSpin.isEnabled = false
             btnSpin2.isEnabled = false
             var spin: Int = Random.nextInt(20) + 10
-            spin *= 14;
+            spin *= 14
             val timer = object: CountDownTimer((spin*20).toLong(), 1) {
                 override fun onTick(millisUntilFinished: Long) {
                     val rotation: Float = wheel.rotation + 3

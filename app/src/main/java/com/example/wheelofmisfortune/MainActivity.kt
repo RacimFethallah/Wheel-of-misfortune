@@ -1,43 +1,173 @@
 package com.example.wheelofmisfortune
 
+import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.Spinner
+import android.view.View
+import android.widget.*
+import androidx.core.content.ContextCompat
 
 class MainActivity : AppCompatActivity() {
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
 
-
         val mySpinner = findViewById<Spinner>(R.id.spinner)
         val myButton = findViewById<Button>(R.id.selection)
+        val editSpinner = findViewById<Button>(R.id.edit)
+        val addButton = findViewById<Button>(R.id.add)
+        val deleteButton = findViewById<Button>(R.id.delete)
+        val addtext = findViewById<EditText>(R.id.addtext)
+        val addtext2 = findViewById<EditText>(R.id.addtext2)
+        var text: String
 
 
+        var addButtonDrawable: Drawable
+        var editButtonDrawable: Drawable
+        var plus = ContextCompat.getDrawable(this, R.drawable.plus)
+        var edit = ContextCompat.getDrawable(this, R.drawable.edit)
+        var cross = ContextCompat.getDrawable(this, R.drawable.cancel)
 
-        val spinnerData = arrayOf("Groupe 1", "Groupe 2", "Groupe 3", "Groupe 4")
+
+        val spinnerData = mutableListOf<String>()
         val spinnerAdapter = ArrayAdapter(this, R.layout.spinner_item, spinnerData)
         mySpinner.adapter = spinnerAdapter
 
 
 
-        myButton.setOnClickListener{
-            when (mySpinner.selectedItem as String){
-                "Groupe 1" -> {val intent = Intent(this,ActivityG1::class.java)
-                    startActivity(intent)}
-                "Groupe 2" -> {val intent = Intent(this,ActivityG2::class.java)
-                    startActivity(intent)}
-                "Groupe 3" -> {val intent = Intent(this,ActivityG3::class.java)
-                    startActivity(intent)}
-                "Groupe 4" -> {val intent = Intent(this,ActivityG4::class.java)
-                    startActivity(intent)}
-            }
 
+        //verifie si le spinner est vide
+        if (spinnerAdapter.count != 0) {  //Si spinner non vide on ne peut qu'editer
+            editSpinner.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.edit, 0, 0)
+        } else { //Si spinner vide on ne peut qu'ajouter
+            editSpinner.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.plus, 0, 0)
         }
+
+
+
+
+
+
+
+        // Fonction du bouton editer roue
+        editSpinner.setOnClickListener {
+            editButtonDrawable = editSpinner.compoundDrawables[1]
+            when {
+                editButtonDrawable.constantState == edit?.constantState -> {
+                    editSpinner.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.cancel, 0, 0)
+                    addButton.visibility = View.VISIBLE
+                    deleteButton.visibility = View.VISIBLE
+                }
+                editButtonDrawable.constantState == cross?.constantState -> {
+                    addButton.visibility = View.GONE
+                    deleteButton.visibility = View.GONE
+                    addtext2.visibility = View.GONE
+                    addtext2.setText("")
+                    addButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.plus, 0, 0)
+                    editSpinner.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.edit, 0, 0)
+                }
+                editButtonDrawable.constantState == plus?.constantState -> {
+                    addtext.visibility = View.VISIBLE
+                    editSpinner.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.check, 0, 0)
+                }
+                else -> {
+                    text = addtext.text.toString().trim()
+                    when {
+                        text.isEmpty() -> {
+                            Toast.makeText(this, "Champ vide", Toast.LENGTH_SHORT).show()
+                        }
+                        else -> {
+                            addtext.visibility = View.GONE
+                            editSpinner.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.edit, 0, 0)
+                            spinnerAdapter.add(text)
+                            addtext.setText("")
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+
+
+
+        //Fonction du bouton ajouter roue
+
+        addButton.setOnClickListener {
+            addButtonDrawable = addButton.compoundDrawables[1]
+            if (addButtonDrawable.constantState == plus?.constantState) {
+                addButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.check, 0, 0)
+                addtext2.visibility = View.VISIBLE
+                deleteButton.visibility = View.GONE
+                addButtonDrawable = addButton.compoundDrawables[1]
+            } else {
+                text = addtext2.text.toString().trim()
+                if (text == "") {
+                    Toast.makeText(this, "Champ vide", Toast.LENGTH_SHORT).show()
+                } else if (spinnerData.contains(text)) {
+                    Toast.makeText(this, "Roue '$text' existe deja", Toast.LENGTH_SHORT)
+                        .show()
+                } else {
+                    spinnerAdapter.add(text)
+                    addtext2.visibility = View.GONE
+                    addButton.visibility = View.GONE
+                    addtext2.setText("")
+                    editSpinner.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.edit, 0, 0)
+                    addButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.plus, 0, 0)
+                    addButtonDrawable = addButton.compoundDrawables[1]
+                }
+            }
+        }
+
+
+
+
+
+        //Fonction du bouton supprimer roue
+        deleteButton.setOnClickListener{
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("Supprimer Roue")
+            builder.setMessage("Voulez vous supprimer la roue selectionnée?")
+            builder.setPositiveButton("Oui") { dialog, which ->
+                val selectedItem = mySpinner.selectedItem as String
+                spinnerAdapter.remove(selectedItem)
+                addButton.visibility = View.GONE
+                deleteButton.visibility = View.GONE
+                editSpinner.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.edit, 0, 0)
+                editButtonDrawable = editSpinner.compoundDrawables[1]
+                if(spinnerAdapter.count == 0){editSpinner.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.plus, 0, 0)
+                    editButtonDrawable = editSpinner.compoundDrawables[1]}
+            }
+            builder.setNegativeButton("Annuler") { dialog, which ->
+                // ne rien faire
+            }
+            val dialog = builder.create()
+            dialog.show()
+        }
+
+
+
+        //Fonction du bouton selection de roue
+
+        myButton.setOnClickListener {
+
+            if (spinnerAdapter.count > 0) {
+                val i = Intent(this, secondActivity::class.java)
+                val spinnerResult = mySpinner.selectedItem.toString()
+                i.putExtra("spinnerResult", spinnerResult)
+                startActivity(i)
+            } else {
+                Toast.makeText(this, "Aucune Roue à selectionner", Toast.LENGTH_SHORT).show()
+            }
+        }
+
     }
 }
