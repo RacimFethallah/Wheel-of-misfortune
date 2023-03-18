@@ -8,52 +8,96 @@
     tools:context=".secondActivity">
 
 
-    <me.sujanpoudel.wheelview.WheelView
+    <com.example.wheelofmisfortune.WheelView
         android:id="@+id/wheel_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="333dp"
+        android:layout_height="330dp"
         android:layout_margin="16dp"
-        app:wheelDividerStrokeWidth="16dp"
-        app:wheelArcBackgroundColor="#F7F8FB"
-        app:wheelSelectedArcBackgroundColor="#FE6447"
-        app:wheelCenterIcon="@drawable/ic_baseline_add_24"
-        app:wheelCenterIconPadding="16dp"
-        app:wheelCenterIconTint="@android:color/white"
-        app:wheelAnchorAngle="270"
-        app:wheelStartAngle="315"
-        app:wheelTextSize="16sp"
-        app:wheelSelectedTextColor="#FFF"
-        app:wheelTextColor="#000000"
-        app:wheelAnimationDuration="800"
-        app:wheelMode="ANIMATE_TO_ANCHOR"
-        />
-
-    <EditText
-        android:id="@+id/addtext"
-        android:layout_width="277dp"
-        android:layout_height="48dp"
-        android:background="@drawable/edit_text_border"
-        android:ems="10"
-        android:hint="Veuillez saisir le nom de la roue"
-        android:paddingLeft="10dp"
-        android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.917" />
-
+        app:layout_constraintVertical_bias="0.161"
+        app:wheelAnchorAngle="270"
+        app:wheelAnimationDuration="800"
+        app:wheelArcBackgroundColor="#F44336"
+        app:wheelCenterIconPadding="8dp"
+        app:wheelCenterIconTint="@android:color/white"
+        app:wheelDividerStrokeWidth="5dp"
+        app:wheelMode="STATIC"
+        app:wheelSelectedArcBackgroundColor="#F44336"
+        app:wheelSelectedTextColor="#000000"
+        app:wheelStartAngle="315"
+        app:wheelTextColor="#000000"
+        app:wheelTextSize="16sp" />
 
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/spinButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="Spin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.917"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="0.812" />
+        app:layout_constraintTop_toBottomOf="@+id/wheel_view"
+        app:layout_constraintVertical_bias="0.167" />
+
+
+    <Button
+        android:id="@+id/editv"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:background="@drawable/rounded_button"
+        android:drawableTop="@drawable/edit"
+        android:paddingTop="15dp"
+        android:text=""
+        android:textSize="24sp"
+        app:backgroundTint="#E11B1B"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.951"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.968" />
+
+    <Button
+        android:id="@+id/addv"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:background="@drawable/rounded_button"
+        android:drawableTop="@drawable/plus"
+        android:paddingTop="2dp"
+        android:visibility="gone"
+        android:text="Button"
+        app:layout_constraintBottom_toTopOf="@+id/editv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.919"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.954" />
+
+
+    <Button
+        android:id="@+id/deletev"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:background="@drawable/rounded_button"
+        android:drawableTop="@drawable/delete"
+        android:paddingTop="2dp"
+        android:visibility="gone"
+        android:text="Button"
+        app:layout_constraintBottom_toTopOf="@+id/addv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.919"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.962" />
+
+
+
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,51 @@
+override fun onDraw(canvas: Canvas?) {
+        super.onDraw(canvas)
+
+        val save = canvas!!.save()
+
+        bgCircle.let {
+            canvas.drawCircle(it.cx, it.cy, it.radius, bgCircleShadowPaint)
+            canvas.drawCircle(it.cx, it.cy, it.radius, bgCirclePaint)
+        }
+
+        arcs.forEach {
+            canvas.drawArc(arcRect, it.startAngle, it.sweepAngle, true, arcPaint.apply {
+                color = if (it.selected) selectedArcBackgroundColor else arcBackgroundColor
+                style = Paint.Style.FILL
+            })
+            canvas.drawArc(arcStrokeRect, it.startAngle, it.sweepAngle, true, arcPaint.apply {
+                color = Color.WHITE
+                strokeWidth = dividerStrokeWidth
+                style = Paint.Style.STROKE
+            })
+        }
+
+        centerCircle.let {
+            canvas.drawCircle(it.cx, it.cy, it.radius, arcPaint.apply {
+                color = selectedArcBackgroundColor
+                style = Paint.Style.FILL
+            })
+            canvas.drawCircle(it.cx, it.cy, it.radius, arcPaint.apply {
+                color = Color.WHITE
+                strokeWidth = dividerStrokeWidth
+                style = Paint.Style.STROKE
+            })
+        }
+
+        arcs.forEach {
+            val radius = bgCircle.radius * .65f
+            val angle = Math.toRadians(it.startAngle + it.sweepAngle / 2.0)
+            val x = arcRect.centerX() + radius * cos(angle).toFloat()
+            val y = arcRect.centerY() + radius * sin(angle).toFloat()
+            val textLayout = StaticLayout(it.text, textPaint, 200, Layout.Alignment.ALIGN_CENTER, 1.0f, 0.0f, false)
+            textPaint.color = if (it.selected) selectedTextColor else textColor
+            textPaint.textSize = _textSize.toFloat()
+            canvas.save()
+            canvas.translate(x - textLayout.width / 2, y - textLayout.height / 2)
+            textLayout.draw(canvas)
+            canvas.restore()
+        }
+
+        centerIcon?.draw(canvas)
+        canvas.restoreToCount(save)
+    }
