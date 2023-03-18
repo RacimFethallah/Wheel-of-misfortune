@@ -154,6 +154,8 @@ class MainActivity : AppCompatActivity() {
 
 
 
+
+
         //Fonction du bouton supprimer roue
         deleteButton.setOnClickListener{
             val builder = AlertDialog.Builder(this)
@@ -182,12 +184,12 @@ class MainActivity : AppCompatActivity() {
         //Fonction du bouton selection de roue
 
         myButton.setOnClickListener {
-
+            val selectedWheelName = mySpinner.selectedItem as String
+            val selectedWheelId = db.getWheelIdByName(selectedWheelName)
             if (spinnerAdapter.count > 0) {
-                val i = Intent(this, secondActivity::class.java)
-                val spinnerResult = mySpinner.selectedItem.toString()
-                i.putExtra("spinnerResult", spinnerResult)
-                startActivity(i)
+                val intent = Intent(this, secondActivity::class.java)
+                intent.putExtra("wheel_id", selectedWheelId)
+                startActivity(intent)
             } else {
                 Toast.makeText(this, "Aucune Roue à selectionner", Toast.LENGTH_SHORT).show()
             }

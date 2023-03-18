@@ -29,7 +29,8 @@ class Wheeldb (context: Context, factory: SQLiteDatabase.CursorFactory?) :
              CREATE TABLE $TABLE_VAL (
              $VALUES_ID INTEGER PRIMARY KEY AUTOINCREMENT,
              $VALUES_NAME TEXT,
-             $WHEEL_REF REFERENCES $TABLE_NAME ($COLUMN_ID)
+             $WHEEL_REF INTEGER,
+             FOREIGN KEY ($WHEEL_REF) REFERENCES $TABLE_NAME($COLUMN_ID) ON DELETE CASCADE
              )
         """.trimIndent()
         db.execSQL(createTableWheels)
@@ -57,7 +58,7 @@ class Wheeldb (context: Context, factory: SQLiteDatabase.CursorFactory?) :
         db.close()
     }
 
-    fun addval(name: String, wheelid: Int){
+    fun addval(name: String, wheelid: Long?){
         val values = ContentValues()
 
         values.put(VALUES_NAME, name)
@@ -80,14 +81,15 @@ class Wheeldb (context: Context, factory: SQLiteDatabase.CursorFactory?) :
 
     }
 
-    fun getVal(): Cursor? {
+    fun getVal(wheelId: Long?): Cursor? {
         val db = this.readableDatabase
 
-        return db.rawQuery("SELECT * FROM $TABLE_VAL, $TABLE_NAME WHERE $TABLE_VAL.$WHEEL_REF = $TABLE_NAME.$COLUMN_ID", null)
+        return db.rawQuery("SELECT * FROM $TABLE_VAL WHERE $WHEEL_REF = $wheelId", null)
     }
 
     fun deleteWheel(selectedItem: String){
         val db = this.writableDatabase
+        db.execSQL("DELETE FROM $TABLE_VAL WHERE $WHEEL_REF IN (SELECT $COLUMN_ID FROM $TABLE_NAME WHERE $COLUMN_NAME = ?)", arrayOf(selectedItem))
         db.delete(TABLE_NAME, "$COLUMN_NAME = ?", arrayOf(selectedItem))
         db.close()
     }
@@ -97,6 +99,46 @@ class Wheeldb (context: Context, factory: SQLiteDatabase.CursorFactory?) :
         val db = this.writableDatabase
         db.delete(TABLE_VAL, "$VALUES_NAME = ?", arrayOf(name))
         db.close()
+    }
+
+
+
+    fun getWheelIdByName(name: String): Long? {
+        val db = this.readableDatabase
+        val cursor = db.query(
+            TABLE_NAME,
+            arrayOf(COLUMN_ID),
+            "$COLUMN_NAME = ?",
+            arrayOf(name),
+            null,
+            null,
+            null
+        )
+
+        var wheelId: Long? = null
+        if (cursor.moveToFirst()) {
+            val index = cursor.getColumnIndex(COLUMN_ID)
+            if (index != -1) {
+                wheelId = cursor.getLong(index)
+            }
+        }
+        cursor.close()
+        return wheelId
+    }
+
+
+    fun getWheelId(wheelId: Long): Long? {
+        val query = "SELECT $COLUMN_ID FROM $TABLE_NAME WHERE $COLUMN_ID = ?"
+        val cursor = readableDatabase.rawQuery(query, arrayOf(wheelId.toString()))
+
+        val id: Long? = if (cursor.moveToFirst()) {
+            cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_ID))
+        } else {
+            null
+        }
+
+        cursor.close()
+        return id
     }
 
 
