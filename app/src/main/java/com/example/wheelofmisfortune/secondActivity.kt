@@ -16,6 +16,7 @@ import android.view.animation.RotateAnimation
 import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import me.sujanpoudel.wheelview.WheelView
 import kotlin.random.Random
 
 
@@ -33,13 +34,14 @@ class secondActivity : AppCompatActivity() {
         setContentView(R.layout.activity_second)
 
 
-        val mySpinner = findViewById<Spinner>(R.id.spinner2)
+
+        val wheelView = findViewById<WheelView>(R.id.wheel_view)
+        wheelView.titles = listOf("Bubble Sort", "Quick Sort", "Merge Sort", "Radix Sort")
+
         val addButton = findViewById<Button>(R.id.button)
         val addtext = findViewById<EditText>(R.id.addtext)
 
-        val spinnerData = mutableListOf<String>()
-        val spinnerAdapter = ArrayAdapter(this, R.layout.spinner_item, spinnerData)
-        mySpinner.adapter = spinnerAdapter
+
 
 
         addButton.setOnClickListener {
@@ -49,7 +51,7 @@ class secondActivity : AppCompatActivity() {
                     Toast.makeText(this, "Champ vide", Toast.LENGTH_SHORT).show()
                 }
                 else -> {
-                    spinnerAdapter.add(text)
+
                     addtext.setText("")
 
 
