@@ -12,25 +12,14 @@
         android:theme="@style/Theme.WheelOfMisfortune"
         tools:targetApi="31">
         <activity
-            android:name=".ActivityG4"
-            android:screenOrientation="portrait"
-            android:exported="false" />
-        <activity
-            android:name=".ActivityG1"
-            android:screenOrientation="portrait"
-            android:exported="false" />
-        <activity
-            android:name=".ActivityG2"
-            android:screenOrientation="portrait"
-            android:exported="false" />
-        <activity
-            android:name=".ActivityG3"
-            android:screenOrientation="portrait"
-            android:exported="false" />
+            android:name=".secondActivity"
+            android:parentActivityName=".MainActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

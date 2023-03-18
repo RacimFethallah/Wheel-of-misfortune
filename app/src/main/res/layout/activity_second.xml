@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FBB1B1"
+    tools:context=".secondActivity">
+
+
+    <com.example.wheelofmisfortune.WheelView
+        android:id="@+id/wheel_view"
+        android:layout_width="376dp"
+        android:layout_height="347dp"
+        android:layout_margin="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.514"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.152"
+        app:wheelAnchorAngle="270"
+        app:wheelAnimationDuration="800"
+        app:wheelArcBackgroundColor="#F44336"
+        app:wheelCenterIconPadding="8dp"
+        app:wheelCenterIconTint="@android:color/white"
+        app:wheelDividerStrokeWidth="5dp"
+        app:wheelMode="STATIC"
+        app:wheelSelectedArcBackgroundColor="#F44336"
+        app:wheelSelectedTextColor="#000000"
+        app:wheelStartAngle="315"
+        app:wheelTextColor="#000000"
+        app:wheelTextSize="16sp" />
+
+    <Button
+        android:id="@+id/spinButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Spin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/wheel_view"
+        app:layout_constraintVertical_bias="0.169" />
+
+    <Button
+        android:id="@+id/editv"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:background="@drawable/rounded_button"
+        android:drawableTop="@drawable/edit"
+        android:paddingTop="15dp"
+        android:text=""
+        android:textSize="24sp"
+        app:backgroundTint="#E11B1B"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.951"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.968" />
+
+
+    <Button
+        android:id="@+id/addv"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:background="@drawable/rounded_button"
+        android:drawableTop="@drawable/plus"
+        android:paddingTop="2dp"
+        android:text="Button"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.919"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.838" />
+
+    <Button
+        android:id="@+id/deletev"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:background="@drawable/rounded_button"
+        android:drawableTop="@drawable/delete"
+        android:paddingTop="2dp"
+        android:text="Button"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.919"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.753" />
+
+    <EditText
+        android:id="@+id/addtextv"
+        android:layout_width="277dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/edit_text_border"
+        android:ems="10"
+        android:hint="Add Value"
+        android:paddingLeft="10dp"
+        android:textColor="#000000"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/addv"
+        app:layout_constraintHorizontal_bias="0.137"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.84" />
+
+    <EditText
+        android:id="@+id/deletetextv"
+        android:layout_width="277dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/edit_text_border"
+        android:ems="10"
+        android:visibility="gone"
+        android:hint="Delete value"
+        android:paddingLeft="10dp"
+        android:textColor="#000000"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/addv"
+        app:layout_constraintHorizontal_bias="0.137"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.755" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="44dp"
+        android:layout_height="54dp"
+        app:layout_constraintBottom_toTopOf="@+id/wheel_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/target" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
