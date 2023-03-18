@@ -10,14 +10,15 @@
 
     <com.example.wheelofmisfortune.WheelView
         android:id="@+id/wheel_view"
-        android:layout_width="333dp"
-        android:layout_height="330dp"
+        android:layout_width="376dp"
+        android:layout_height="347dp"
         android:layout_margin="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.514"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.018"
+        app:layout_constraintVertical_bias="0.152"
         app:wheelAnchorAngle="270"
         app:wheelAnimationDuration="800"
         app:wheelArcBackgroundColor="#F44336"
@@ -31,7 +32,6 @@
         app:wheelTextColor="#000000"
         app:wheelTextSize="16sp" />
 
-
     <Button
         android:id="@+id/spinButton"
         android:layout_width="wrap_content"
@@ -42,7 +42,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/wheel_view"
-        app:layout_constraintVertical_bias="0.043" />
+        app:layout_constraintVertical_bias="0.169" />
 
     <Button
         android:id="@+id/editv"
@@ -69,8 +69,8 @@
         android:background="@drawable/rounded_button"
         android:drawableTop="@drawable/plus"
         android:paddingTop="2dp"
-        android:visibility="gone"
         android:text="Button"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.919"
@@ -85,8 +85,8 @@
         android:background="@drawable/rounded_button"
         android:drawableTop="@drawable/delete"
         android:paddingTop="2dp"
-        android:visibility="gone"
         android:text="Button"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.919"
@@ -119,16 +119,29 @@
         android:layout_marginStart="8dp"
         android:background="@drawable/edit_text_border"
         android:ems="10"
+        android:visibility="gone"
         android:hint="Delete value"
         android:paddingLeft="10dp"
         android:textColor="#000000"
-        android:visibility="gone"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/addv"
         app:layout_constraintHorizontal_bias="0.137"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.755" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="44dp"
+        android:layout_height="54dp"
+        app:layout_constraintBottom_toTopOf="@+id/wheel_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/target" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

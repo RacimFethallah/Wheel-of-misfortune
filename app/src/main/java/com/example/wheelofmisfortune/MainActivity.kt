@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.core.content.ContextCompat
 
@@ -19,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
-
+        val inputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
 
 
 
@@ -96,6 +97,8 @@ class MainActivity : AppCompatActivity() {
                 }
                 plus?.constantState -> {
                     addtext.visibility = View.VISIBLE
+                    addtext.requestFocus()
+                    inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
                     editSpinner.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.check, 0, 0)
                 }
                 else -> {
@@ -106,6 +109,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         else -> {
                             addtext.visibility = View.GONE
+                            inputMethodManager.hideSoftInputFromWindow(addtext.windowToken, 0)
                             editSpinner.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.edit, 0, 0)
                             spinnerAdapter.add(text)
                             addtext.setText("")
@@ -128,6 +132,8 @@ class MainActivity : AppCompatActivity() {
             if (addButtonDrawable.constantState == plus?.constantState) {
                 addButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.check, 0, 0)
                 addtext2.visibility = View.VISIBLE
+                inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
+                addtext2.requestFocus()
                 deleteButton.visibility = View.GONE
                 addButtonDrawable = addButton.compoundDrawables[1]
             } else {
@@ -138,6 +144,7 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this, "Roue '$text' existe deja", Toast.LENGTH_SHORT)
                         .show()
                 } else {
+                    inputMethodManager.hideSoftInputFromWindow(addtext2.windowToken, 0)
                     db.addWheeldb(text)
                     spinnerAdapter.add(text)
                     addtext2.visibility = View.GONE
@@ -146,6 +153,7 @@ class MainActivity : AppCompatActivity() {
                     editSpinner.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.edit, 0, 0)
                     addButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.plus, 0, 0)
                     addButtonDrawable = addButton.compoundDrawables[1]
+                    Toast.makeText(this, "Roue '$text' ajouté avec succès", Toast.LENGTH_SHORT)
                 }
             }
         }

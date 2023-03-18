@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.core.content.ContextCompat
 
@@ -20,6 +21,13 @@ class secondActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_second)
+
+
+
+        val inputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+
+
+
 
         val db = Wheeldb(this, null)
         val wheelId = intent.getLongExtra("wheel_id", -1)
@@ -69,6 +77,9 @@ class secondActivity : AppCompatActivity() {
 
         //function to spin the wheel
         spinButton.setOnClickListener {
+            addButton.visibility = View.GONE
+            deleteButton.visibility = View.GONE
+            editButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.edit, 0, 0)
             wheelView.spinWheel()
         }
 
@@ -106,26 +117,32 @@ class secondActivity : AppCompatActivity() {
                 plus?.constantState -> {
                     deleteButton.visibility = View.GONE
                     addval.visibility = View.VISIBLE
+                    addval.requestFocus()
+                    inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
                     editButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.cancel, 0, 0)
                     addButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.check, 0, 0)
                     addButtonDrawable = addButton.compoundDrawables[1]
                 }
                 check?.constantState -> {
-                    var text = addval.text.toString().trim()
-                    if (text == "") {
-                        Toast.makeText(this, "Champ vide", Toast.LENGTH_SHORT).show()
-                    } else if (liste.contains(text)) {
-                        Toast.makeText(this, "valeur '$text' existe deja", Toast.LENGTH_SHORT).show()
-                    } else {
-                        liste.add(text)
-                        db.addval(text, currentWheel)
-                        wheelView.titles = liste
-                        addval.setText("")
-                        addval.visibility = View.GONE
-                        addButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.plus, 0, 0)
-                        deleteButton.visibility = View.VISIBLE
-                        addButtonDrawable = addButton.compoundDrawables[1]
+                    var values = addval.text.toString().trim().split("\n")
+                    for (value in values) {
+                        if (value == "") {
+                            Toast.makeText(this, "Champ vide", Toast.LENGTH_SHORT).show()
+                        } else if (liste.contains(value)) {
+                            Toast.makeText(this, "valeur '$value' existe deja", Toast.LENGTH_SHORT).show()
+                        } else {
+                            inputMethodManager.hideSoftInputFromWindow(addval.windowToken, 0)
+                            liste.add(value)
+                            db.addval(value, currentWheel)
+                            wheelView.titles = liste
+                            addval.setText("")
+                            addval.visibility = View.GONE
+                            addButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.plus, 0, 0)
+                            deleteButton.visibility = View.VISIBLE
+                            addButtonDrawable = addButton.compoundDrawables[1]
+                        }
                     }
+
                 }
             }
         }
@@ -139,6 +156,8 @@ class secondActivity : AppCompatActivity() {
                 del?.constantState -> {
                     addButton.visibility = View.GONE
                     deleteval.visibility = View.VISIBLE
+                    deleteval.requestFocus()
+                    inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
                     editButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.cancel, 0, 0)
                     deleteButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.check, 0, 0)
                     deleteButtonDrawable = deleteButton.compoundDrawables[1]
@@ -150,6 +169,7 @@ class secondActivity : AppCompatActivity() {
                     } else if (text !in liste) {
                         Toast.makeText(this, "valeur '$text' n'existe pas!", Toast.LENGTH_SHORT).show()
                     } else {
+                        inputMethodManager.hideSoftInputFromWindow(deleteval.windowToken, 0)
                         liste.remove(text)
                         db.deleteVal(text)
                         wheelView.titles = liste
