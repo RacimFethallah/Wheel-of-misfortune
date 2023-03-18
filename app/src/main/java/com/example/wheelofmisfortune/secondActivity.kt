@@ -17,6 +17,8 @@ class secondActivity : AppCompatActivity() {
 
 
 
+
+
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +27,7 @@ class secondActivity : AppCompatActivity() {
 
 
         val inputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-
+        val spinButton = findViewById<Button>(R.id.spinButton)
 
 
 
@@ -60,7 +62,7 @@ class secondActivity : AppCompatActivity() {
         val addButton = findViewById<Button>(R.id.addv)
         val deleteButton = findViewById<Button>(R.id.deletev)
         val editButton = findViewById<Button>(R.id.editv)
-        val spinButton = findViewById<Button>(R.id.spinButton)
+
 
 
 
@@ -80,7 +82,7 @@ class secondActivity : AppCompatActivity() {
             addButton.visibility = View.GONE
             deleteButton.visibility = View.GONE
             editButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.edit, 0, 0)
-            wheelView.spinWheel()
+            wheelView.spinWheel(spinButton)
         }
 
 

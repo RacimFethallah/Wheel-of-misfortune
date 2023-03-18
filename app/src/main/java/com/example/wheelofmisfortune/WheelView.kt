@@ -16,6 +16,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.LinearInterpolator
+import android.widget.Button
 import android.widget.Toast
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.graphics.toRect
@@ -376,7 +377,8 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     private var isAnimating = false
     private var isTouchEnabled = true
 
-    fun spinWheel() {
+    fun spinWheel(button: Button) {
+
         val animationDuration = 7000L
         if (!isAnimating) { // check if not already animating
             isAnimating = true// set the flag
@@ -392,12 +394,13 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
                 //...
             }
             anim.addListener(object : Animator.AnimatorListener {
-                override fun onAnimationStart(p0: Animator) {}
+                override fun onAnimationStart(p0: Animator) {button.isEnabled = false}
                 override fun onAnimationCancel(p0: Animator) {}
                 override fun onAnimationRepeat(p0: Animator) {}
                 override fun onAnimationEnd(p0: Animator) {
                     isAnimating = false// reset the flag
                     isTouchEnabled = true
+                    button.isEnabled = true
                 }
             })
             anim.start() // start the animation
