@@ -41,7 +41,7 @@ class secondActivity : AppCompatActivity() {
 
 
         val wheelView = findViewById<WheelView>(R.id.wheel_view)
-        var liste = mutableListOf<String>()
+        val liste = mutableListOf<String>()
         wheelView.titles = liste
 
 
@@ -126,7 +126,7 @@ class secondActivity : AppCompatActivity() {
                     addButtonDrawable = addButton.compoundDrawables[1]
                 }
                 check?.constantState -> {
-                    var values = addval.text.toString().trim().split("\n")
+                    val values = addval.text.toString().trim().split("\n")
                     for (value in values) {
                         if (value == "") {
                             Toast.makeText(this, "Champ vide", Toast.LENGTH_SHORT).show()
@@ -165,21 +165,24 @@ class secondActivity : AppCompatActivity() {
                     deleteButtonDrawable = deleteButton.compoundDrawables[1]
                 }
                 check?.constantState -> {
-                    var text = deleteval.text.toString().trim()
-                    if (text == "") {
-                        Toast.makeText(this, "Champ vide", Toast.LENGTH_SHORT).show()
-                    } else if (text !in liste) {
-                        Toast.makeText(this, "valeur '$text' n'existe pas!", Toast.LENGTH_SHORT).show()
-                    } else {
-                        inputMethodManager.hideSoftInputFromWindow(deleteval.windowToken, 0)
-                        liste.remove(text)
-                        db.deleteVal(text)
-                        wheelView.titles = liste
-                        deleteval.setText("")
-                        deleteval.visibility = View.GONE
-                        deleteButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.delete, 0, 0)
-                        addButton.visibility = View.VISIBLE
-                        deleteButtonDrawable = addButton.compoundDrawables[1]
+                    when (val text = deleteval.text.toString().trim()) {
+                        "" -> {
+                            Toast.makeText(this, "Champ vide", Toast.LENGTH_SHORT).show()
+                        }
+                        !in liste -> {
+                            Toast.makeText(this, "valeur '$text' n'existe pas!", Toast.LENGTH_SHORT).show()
+                        }
+                        else -> {
+                            inputMethodManager.hideSoftInputFromWindow(deleteval.windowToken, 0)
+                            liste.remove(text)
+                            db.deleteVal(text)
+                            wheelView.titles = liste
+                            deleteval.setText("")
+                            deleteval.visibility = View.GONE
+                            deleteButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.delete, 0, 0)
+                            addButton.visibility = View.VISIBLE
+                            deleteButtonDrawable = addButton.compoundDrawables[1]
+                        }
                     }
                 }
             }

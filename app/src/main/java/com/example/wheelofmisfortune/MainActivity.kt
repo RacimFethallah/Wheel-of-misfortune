@@ -153,7 +153,7 @@ class MainActivity : AppCompatActivity() {
                     editSpinner.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.edit, 0, 0)
                     addButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.plus, 0, 0)
                     addButtonDrawable = addButton.compoundDrawables[1]
-                    Toast.makeText(this, "Roue '$text' ajouté avec succès", Toast.LENGTH_SHORT)
+                    Toast.makeText(this, "Roue '$text' ajouté avec succès", Toast.LENGTH_SHORT).show()
                 }
             }
         }
