@@ -19,17 +19,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.152"
-        app:wheelAnchorAngle="270"
+        app:wheelAnchorAngle="90"
         app:wheelAnimationDuration="800"
         app:wheelArcBackgroundColor="#F44336"
         app:wheelCenterIconPadding="8dp"
         app:wheelCenterIconTint="@android:color/white"
-        app:wheelDividerStrokeWidth="5dp"
+        app:wheelDividerStrokeWidth="2dp"
         app:wheelMode="STATIC"
         app:wheelSelectedArcBackgroundColor="#F44336"
-        app:wheelSelectedTextColor="#000000"
-        app:wheelStartAngle="315"
-        app:wheelTextColor="#000000"
+        app:wheelSelectedTextColor="#FFFFFF"
+        app:wheelStartAngle="180"
+        app:wheelTextColor="#FFFFFF"
         app:wheelTextSize="16sp" />
 
     <Button
@@ -132,7 +132,7 @@
         app:layout_constraintVertical_bias="0.755" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/anchor"
         android:layout_width="44dp"
         android:layout_height="54dp"
         app:layout_constraintBottom_toTopOf="@+id/wheel_view"

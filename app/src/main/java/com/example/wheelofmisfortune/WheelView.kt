@@ -4,6 +4,7 @@ package com.example.wheelofmisfortune
 import android.animation.Animator
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.Drawable
@@ -11,6 +12,7 @@ import android.text.Layout
 import android.text.StaticLayout
 import android.text.TextPaint
 import android.util.AttributeSet
+import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
@@ -36,7 +38,7 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
         STATIC,
     }
 
-    private var _mode: Mode;
+    private var _mode: Mode
     private var _anchorAngle: Float
     private var _startAngle: Float
     private var _centerIconPadding: Float
@@ -212,7 +214,7 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     private val gestureDetector = GestureDetectorCompat(context, object : GestureDetector.SimpleOnGestureListener() {
         override fun onDown(e: MotionEvent): Boolean = true
         override fun onSingleTapUp(e: MotionEvent): Boolean {
-            onClickOnWheel(e!!)
+            onClickOnWheel(e)
             return true
         }
     })
@@ -227,7 +229,7 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
                 (abgle - 360) % 360
             )
             paths.map { it to abs(prevStartAngle - it) }
-                .minBy { it.second }!!
+                .minBy { it.second }
                 .first // find the min possible path to prev start angle
         }
 
@@ -274,6 +276,7 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
         refresh()
     }
 
+
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
@@ -284,7 +287,7 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
             canvas.drawCircle(it.cx, it.cy, it.radius, bgCirclePaint)
         }
 
-        arcs.forEachIndexed { index, arc ->
+        arcs.forEachIndexed { _, arc ->
             val randomColor = Color.argb(255, Random.nextInt(256), Random.nextInt(256), Random.nextInt(256))
             canvas.drawArc(arcRect, arc.startAngle, arc.sweepAngle, true, arcPaint.apply {
                 color = randomColor
@@ -296,7 +299,7 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
                 style = Paint.Style.STROKE
             })
         }
-
+        arcs.reversed()
         arcs.forEach {
             val radius = bgCircle.radius * .65f
             val angle = Math.toRadians(it.startAngle + it.sweepAngle / 2.0)
@@ -340,6 +343,7 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
 
     private var currentRotationAngle = 0f
 
+
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (!isTouchEnabled) { // check if touch events are enabled
             return false // ignore touch events if wheel is spinning
@@ -356,6 +360,8 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
                 val angleDelta = currentAngle - startAngle
                 rotateWheelBy(angleDelta)
                 startAngle = currentAngle
+
+
                 return true
             }
         }
@@ -364,13 +370,14 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     private fun getAngle(x: Float, y: Float): Float {
         val dx = x - (width / 2f)
         val dy = y - (height / 2f)
-        return Math.toDegrees(Math.atan2(dy.toDouble(), dx.toDouble())).toFloat() + 90f
+        return Math.toDegrees(atan2(dy.toDouble(), dx.toDouble())).toFloat() + 90f
     }
 
     private fun rotateWheelBy(angle: Float) {
         currentRotationAngle += angle
         invalidate()
     }
+
 
 
 
@@ -386,7 +393,7 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
             // create ObjectAnimator for the rotation animation
             val random = Random.Default
             val endRotation = rotation + random.nextInt(2160).toFloat() + 2160 // set end rotation to a random value between 0 and 3600 degrees
-            val anim = ObjectAnimator.ofFloat(this, View.ROTATION, rotation, endRotation)
+            val anim = ObjectAnimator.ofFloat(this, ROTATION, rotation, endRotation)
             anim.duration = animationDuration // set animation duration
             anim.interpolator = DecelerateInterpolator() // set interpolator for smooth animation
             anim.addUpdateListener {
@@ -394,6 +401,7 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
                 //...
             }
             anim.addListener(object : Animator.AnimatorListener {
+
                 override fun onAnimationStart(p0: Animator) {button.isEnabled = false}
                 override fun onAnimationCancel(p0: Animator) {}
                 override fun onAnimationRepeat(p0: Animator) {}
@@ -407,7 +415,3 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
         }
     }
 }
-
-
-
-

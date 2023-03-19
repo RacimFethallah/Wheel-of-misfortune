@@ -7,6 +7,7 @@ import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
@@ -79,6 +80,9 @@ class secondActivity : AppCompatActivity() {
 
         //function to spin the wheel
         spinButton.setOnClickListener {
+            for ((index, element) in liste.withIndex()) {
+                Log.d("MyApp", "Index $index: $element")
+            }
             addButton.visibility = View.GONE
             deleteButton.visibility = View.GONE
             editButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.edit, 0, 0)
@@ -126,7 +130,7 @@ class secondActivity : AppCompatActivity() {
                     addButtonDrawable = addButton.compoundDrawables[1]
                 }
                 check?.constantState -> {
-                    val values = addval.text.toString().trim().split("\n")
+                    val values = addval.text.toString().trim().split("[\n,]".toRegex())
                     for (value in values) {
                         if (value == "") {
                             Toast.makeText(this, "Champ vide", Toast.LENGTH_SHORT).show()
