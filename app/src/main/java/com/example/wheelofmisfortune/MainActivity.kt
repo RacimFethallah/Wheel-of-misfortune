@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         val deleteButton = findViewById<Button>(R.id.delete)
         val addtext = findViewById<EditText>(R.id.addtext)
         val addtext2 = findViewById<EditText>(R.id.addtext2)
+        val textzone = findViewById<TextView>(R.id.textView2)
         var text: String
 
 
@@ -67,8 +68,14 @@ class MainActivity : AppCompatActivity() {
 
         //verifie si le spinner est vide
         if (spinnerAdapter.count != 0) {  //Si spinner non vide on ne peut qu'editer
+            mySpinner.visibility = View.VISIBLE
+            myButton.visibility = View.VISIBLE
+            textzone.setText("Veuillez sélectionner une roue")
             editSpinner.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.edit, 0, 0)
         } else { //Si spinner vide on ne peut qu'ajouter
+            mySpinner.visibility = View.GONE
+            myButton.visibility = View.GONE
+            textzone.setText("Veuillez créer une roue")
             editSpinner.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.plus, 0, 0)
         }
 
@@ -86,6 +93,7 @@ class MainActivity : AppCompatActivity() {
                     editSpinner.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.cancel, 0, 0)
                     addButton.visibility = View.VISIBLE
                     deleteButton.visibility = View.VISIBLE
+
                 }
                 cross?.constantState -> {
                     addButton.visibility = View.GONE
@@ -114,6 +122,9 @@ class MainActivity : AppCompatActivity() {
                             spinnerAdapter.add(text)
                             addtext.setText("")
                             db.addWheeldb(text)
+                            mySpinner.visibility = View.VISIBLE
+                            myButton.visibility = View.VISIBLE
+                            textzone.setText("Veuillez sélectionner une roue")
                         }
                     }
                 }
@@ -178,7 +189,10 @@ class MainActivity : AppCompatActivity() {
                 editSpinner.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.edit, 0, 0)
                 editButtonDrawable = editSpinner.compoundDrawables[1]
                 if(spinnerAdapter.count == 0){editSpinner.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.plus, 0, 0)
-                    editButtonDrawable = editSpinner.compoundDrawables[1]}
+                    editButtonDrawable = editSpinner.compoundDrawables[1]
+                    mySpinner.visibility = View.GONE
+                    myButton.visibility = View.GONE
+                    textzone.setText("Veuillez créer une roue")}
             }
             builder.setNegativeButton("Annuler") { _, _ ->
                 // ne rien faire

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FBB1B1"
+    android:background="#FFFFFF"
     tools:context=".MainActivity">
 
     <Spinner
@@ -37,7 +37,7 @@
         android:id="@+id/selection"
         android:layout_width="177dp"
         android:layout_height="51dp"
-        android:backgroundTint="#D82424"
+        android:backgroundTint="#638EE4"
         android:text="Continuer"
         android:textColor="#FFFFFF"
         app:cornerRadius="10dp"
@@ -76,7 +76,7 @@
         android:paddingTop="15dp"
         android:text=""
         android:textSize="24sp"
-        app:backgroundTint="#E11B1B"
+        app:backgroundTint="#638DE3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.951"

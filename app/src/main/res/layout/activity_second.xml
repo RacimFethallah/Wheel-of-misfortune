@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FBB1B1"
+    android:background="#FFFFFF"
     tools:context=".secondActivity">
 
 
     <com.example.wheelofmisfortune.WheelView
         android:id="@+id/wheel_view"
-        android:layout_width="376dp"
-        android:layout_height="347dp"
+        android:layout_width="405dp"
+        android:layout_height="397dp"
         android:layout_margin="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,7 +30,7 @@
         app:wheelSelectedTextColor="#000000"
         app:wheelStartAngle="315"
         app:wheelTextColor="#000000"
-        app:wheelTextSize="16sp" />
+        app:wheelTextSize="10sp" />
 
     <Button
         android:id="@+id/spinButton"
@@ -42,7 +42,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/wheel_view"
-        app:layout_constraintVertical_bias="0.169" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/editv"
@@ -53,7 +53,7 @@
         android:paddingTop="15dp"
         android:text=""
         android:textSize="24sp"
-        app:backgroundTint="#E11B1B"
+        app:backgroundTint="#638DE3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.951"
@@ -133,14 +133,14 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="44dp"
-        android:layout_height="54dp"
+        android:layout_width="65dp"
+        android:layout_height="90dp"
         app:layout_constraintBottom_toTopOf="@+id/wheel_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/target" />
 
 
